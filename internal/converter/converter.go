@@ -161,9 +161,27 @@ func getGrayValue(img image.Image, x, y int) float64 {
 		return 0.0 // Out of bounds
 	}
 
-	// Convert to grayscale value between 0.0 and 1.0
+	// RGB to Grayscale conversion constants
+	// These coefficients represent the human eye's sensitivity to different colors
+	// Based on the [ITU-R BT.601 standard] (formerly CCIR 601) for standard-definition television
+	//
+	// [ITU-R BT.601 standard]: https://en.wikipedia.org/wiki/Rec._601
+	const (
+		// Red represents human eye sensitivity to red (30%)
+		Red = 0.299
+
+		// Green represents human eye sensitivity to green (59%)
+		Green = 0.587
+
+		// Blue represents human eye sensitivity to blue (11%)
+		Blue = 0.114
+
+		// MaxChannelValue is the maximum value for a 16-bit color channel
+		MaxChannelValue = 65535.0
+	)
+
 	r, g, b, _ := img.At(x, y).RGBA()
-	gray := (0.299*float64(r) + 0.587*float64(g) + 0.114*float64(b)) / 65535.0
+	gray := (Red*float64(r) + Green*float64(g) + Blue*float64(b)) / MaxChannelValue
 	return gray
 }
 
