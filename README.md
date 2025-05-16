@@ -35,7 +35,7 @@ jp2b -i image.png
 jp2b -i image.jpg -w 80
 
 # Specify both dimensions
-jp2b -i image.webp -w 100 -h 50 -o output.txt
+jp2b -i image.webp -w 100 -H 50 -o output.txt
 
 # Adjust threshold and invert
 jp2b -i image.png -t 0.7 -v
